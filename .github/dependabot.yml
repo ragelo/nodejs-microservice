@@ -1,0 +1,45 @@
+version: 2
+updates:
+  # root
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+
+  # containers/grpc
+  - package-ecosystem: docker
+    directory: /containers/grpc
+    schedule:
+      interval: weekly
+      day: friday
+    labels:
+      - "container:grpc"
+  - package-ecosystem: npm
+    directory: /containers/grpc
+    schedule:
+      interval: weekly
+      day: friday
+    labels:
+      - "container:grpc"
+  
+  # packages/core
+  - package-ecosystem: docker
+    directory: /packages/core
+    schedule:
+      interval: weekly
+      day: friday
+    labels:
+      - "package:core"
+  - package-ecosystem: npm
+    directory: /packages/core
+    schedule:
+      interval: weekly
+      day: friday
+    labels:
+      - "package:core"

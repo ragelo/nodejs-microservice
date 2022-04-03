@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-microservice-template",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ragelo/nodejs-microservice.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ragelo/nodejs-microservice/issues"
+  },
+  "homepage": "https://github.com/ragelo/nodejs-microservice#readme",
+  "workspaces": [
+    "containers/*",
+    "packages/*"
+  ],
+  "engines": {
+    "npm": "^8.0.0",
+    "node": "^16.0.0"
+  }
+}

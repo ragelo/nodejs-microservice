@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+service DateService {
+    rpc Today (Empty) returns (Date) {}
+}
+
+message Date {
+    string iso = 1;
+}
+
+message Empty {}
+
