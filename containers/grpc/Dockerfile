@@ -1,7 +1,7 @@
 ########################################
 ## BASE ################################
 ########################################
-FROM node:16-alpine as base
+FROM node:17-alpine as base
 WORKDIR /app
 
 ADD package.json package-lock.json ./
