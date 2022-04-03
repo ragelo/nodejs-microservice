@@ -1,12 +1,12 @@
 {
   "name": "nodejs-microservice-template",
   "version": "1.0.0",
-  "description": "",
+  "description": "Template for NodeJS microservices",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ragelo/nodejs-microservice.git"
   },
-  "author": "",
+  "author": "Sviataslau Brezouski (sviataslau.brezouski@gmail.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ragelo/nodejs-microservice/issues"
@@ -16,8 +16,21 @@
     "containers/*",
     "packages/*"
   ],
+  "scripts": {
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint . --fix",
+    "format:prettier": "prettier --write .",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --check ."
+  },
   "engines": {
     "npm": "^8.0.0",
     "node": "^16.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "2.6.2"
   }
 }
