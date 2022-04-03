@@ -27,7 +27,7 @@ updates:
       day: friday
     labels:
       - "container:grpc"
-  
+
   # packages/core
   - package-ecosystem: docker
     directory: /packages/core

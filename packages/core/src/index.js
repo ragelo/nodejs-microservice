@@ -1,5 +1,5 @@
 module.exports = {
-    getISODate() {
-        return new Date().toISOString();
-    }
-}
+  getISODate() {
+    return new Date().toISOString();
+  },
+};
