@@ -3,17 +3,24 @@ import {
   startServer as startServerGRPC,
 } from "./server/grpc";
 import {
+  buildServer as buildServerGraphQL,
+  startServer as startServerGraphQL,
+} from "./server/graphql";
+import {
   buildServer as buildServerInternal,
   startServer as startServerInternal,
 } from "./utils/internalServer";
 
 function main() {
-  const grpcServer = buildServerGRPC();
-  const internalServer = buildServerInternal(grpcServer);
-
   Promise.all([
-    startServerGRPC(grpcServer),
-    startServerInternal(internalServer),
-  ]);
+    startServerGRPC(buildServerGRPC()),
+    startServerGraphQL(buildServerGraphQL()),
+  ]).then(([grpcServerManager, gqlServerManager]) => {
+    const internalServer = buildServerInternal({
+      grpcServer: grpcServerManager,
+      gqlServer: gqlServerManager,
+    });
+    return startServerInternal(internalServer);
+  });
 }
 main();

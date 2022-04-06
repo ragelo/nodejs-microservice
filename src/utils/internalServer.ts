@@ -1,30 +1,45 @@
 import { createTerminus } from "@godaddy/terminus";
-import { Server } from "@grpc/grpc-js";
 import express from "express";
 import { createServer, Server as HttpServer } from "http";
+export interface ServerManager {
+  status: boolean;
+  stop(): Promise<void>;
+}
 
-export function buildServer(grpcServer: Server) {
+interface InternalServerConfig {
+  grpcServer: ServerManager;
+  gqlServer: ServerManager;
+}
+
+export function buildServer(config: InternalServerConfig) {
   const server = createServer(express());
-  configureServer(server, grpcServer);
+  configureServer(server, config);
   return server;
 }
 
 export function startServer(server: HttpServer) {
   const port = process.env.INTERNAL_PORT || 4000;
-  server.listen(port, () => {
-    console.log(`Internal server running at http://0.0.0.0:${port}`);
+  return new Promise<HttpServer>((resolve, reject) => {
+    // TODO: timeout reject
+    server.listen(port, () => {
+      console.log(`Internal server running at http://0.0.0.0:${port}`);
+      resolve(server);
+    });
   });
-  return server;
 }
 
-function configureServer(httpServer: HttpServer, grpcServer: Server) {
+function configureServer(httpServer: HttpServer, config: InternalServerConfig) {
   createTerminus(httpServer, {
     healthChecks: {
       "/healthz": async () => {
         return Promise.all([
           Promise.resolve({
             name: "grpc",
-            status: true,
+            status: config.grpcServer.status,
+          }),
+          Promise.resolve({
+            name: "graphql",
+            status: config.gqlServer.status,
           }),
         ]);
       },
@@ -38,19 +53,7 @@ function configureServer(httpServer: HttpServer, grpcServer: Server) {
       });
     },
     async onSignal() {
-      await new Promise((resolve, reject) => {
-        const interval = setTimeout(() => {
-          console.error("GRPC.tryShutdown timeout");
-          reject();
-        }, 2000);
-        grpcServer.tryShutdown((error) => {
-          clearInterval(interval);
-          if (error) {
-            console.error("GRPC.tryShutdown error", error);
-            reject(error);
-          }
-        });
-      }).catch(() => grpcServer.forceShutdown());
+      await Promise.all([config.gqlServer.stop(), config.gqlServer.stop()]);
     },
     // Kill server if it didn't shutdown gracefully
     timeout: 5000, // 5s
