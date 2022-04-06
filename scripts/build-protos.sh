@@ -13,5 +13,5 @@ npx grpc_tools_node_protoc \
     --ts_out=grpc_js:${PROTO_DEST} \
     --js_out=import_style=commonjs,binary:${PROTO_DEST} \
     --grpc_out=grpc_js:${PROTO_DEST} \
-    -I ./api/proto \
-    api/proto/*.proto
+    -I ${PROTO_DEST} \
+    ${PROTO_DEST}/*.proto

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+service TodoService {
+    rpc CreateTodoItem (CreateTodoItemInput) returns (TodoItem) {}
+}
+
+message CreateTodoItemInput {
+  string name = 1;
+  string userId = 2;
+}
+
+message TodoItem {
+  string id = 1;
+  string name = 2;
+  string userId = 3;
+}
