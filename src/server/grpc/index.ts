@@ -1,11 +1,10 @@
 import { Server, ServerCredentials } from "@grpc/grpc-js";
-import { DateServiceService } from "./proto/date_grpc_pb";
-import { DataServiceImplemenation } from "./grpc";
+import { TodoServiceService, TodoServiceImplemenation } from "./todo";
 import { ServerManager } from "../../utils/internalServer";
 
 export function buildServer() {
   const server = new Server();
-  server.addService(DateServiceService, DataServiceImplemenation);
+  server.addService(TodoServiceService, TodoServiceImplemenation);
   return server;
 }
 
@@ -36,10 +35,11 @@ export function startServer(server: Server) {
                     console.error("GRPC.tryShutdown error", error);
                     reject(error);
                   }
+                  resolve();
                 });
               });
             } catch {
-              await server.forceShutdown();
+              server.forceShutdown();
             }
           },
         });

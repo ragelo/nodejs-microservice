@@ -1,6 +1,7 @@
 import { createTerminus } from "@godaddy/terminus";
 import express from "express";
 import { createServer, Server as HttpServer } from "http";
+
 export interface ServerManager {
   status: boolean;
   stop(): Promise<void>;
@@ -19,7 +20,7 @@ export function buildServer(config: InternalServerConfig) {
 
 export function startServer(server: HttpServer) {
   const port = process.env.INTERNAL_PORT || 4000;
-  return new Promise<HttpServer>((resolve, reject) => {
+  return new Promise<HttpServer>((resolve) => {
     // TODO: timeout reject
     server.listen(port, () => {
       console.log(`Internal server running at http://0.0.0.0:${port}`);
@@ -53,7 +54,7 @@ function configureServer(httpServer: HttpServer, config: InternalServerConfig) {
       });
     },
     async onSignal() {
-      await Promise.all([config.gqlServer.stop(), config.gqlServer.stop()]);
+      await Promise.all([config.gqlServer.stop(), config.grpcServer.stop()]);
     },
     // Kill server if it didn't shutdown gracefully
     timeout: 5000, // 5s

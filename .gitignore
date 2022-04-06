@@ -106,3 +106,4 @@ dist
 #
 src/server/grpc/proto/*
 !src/server/grpc/proto/.gitkeep
+!src/server/grpc/proto/*.proto

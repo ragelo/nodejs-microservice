@@ -26,7 +26,6 @@ ENV NODE_ENV=production
 # Install production-only dependencies
 RUN npm ci
 
-COPY --from=build /app/api ./proto/api
 COPY --from=build /app/dist ./dist
 
 CMD ["node", "dist/server.js"]
