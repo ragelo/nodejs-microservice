@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  npm:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,6 +20,10 @@ jobs:
       - uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+        with:
+          version: "3.x"
       - uses: actions/cache@v3.0.1
         name: npm-cache
         id: npm-cache
@@ -32,29 +36,10 @@ jobs:
             ${{ runner.os }}-npm
       - name: install
         if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci --prefer-offline --non-interactive --ignore-scripts
-
-  lint:
-    needs: [npm]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16]
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.1.0
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v3.0.1
-        name: npm-cache
-        id: npm-cache
-        with:
-          path: |
-            **/node_modules
-            ${{ steps.npm-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm
+        run: npm ci --prefer-offline --non-interactive
+      - name: build
+        run: npm run build
       - name: lint
         run: npm run lint
+      - name: test
+        run: npm run test
