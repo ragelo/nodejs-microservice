@@ -33,7 +33,7 @@
     "node": "^16.0.0"
   },
   "dependencies": {
-    "@apollo/federation": "^0.36.0",
+    "@apollo/federation": "^0.36.1",
     "@godaddy/terminus": "^4.10.2",
     "@grpc/grpc-js": "^1.6.1",
     "apollo-server": "^3.6.7",
