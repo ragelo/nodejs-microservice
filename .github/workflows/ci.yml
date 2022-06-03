@@ -24,7 +24,7 @@ jobs:
         uses: arduino/setup-protoc@v1
         with:
           version: "3.x"
-      - uses: actions/cache@v3.0.1
+      - uses: actions/cache@v3.0.3
         name: npm-cache
         id: npm-cache
         with:
