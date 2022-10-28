@@ -5,7 +5,7 @@ import { TodoItemService } from "../../service/todoItem";
 export { TodoServiceService } from "./proto/todo_grpc_pb";
 
 const todoItemService = new TodoItemService();
-export const TodoServiceImplemenation: ITodoServiceServer = {
+export const TodoServiceImplementation: ITodoServiceServer = {
   async createTodoItem(call, callback) {
     const todoItem = await todoItemService.create({
       name: call.request.getName(),

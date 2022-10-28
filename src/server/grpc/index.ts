@@ -1,10 +1,10 @@
 import { Server, ServerCredentials } from "@grpc/grpc-js";
-import { TodoServiceService, TodoServiceImplemenation } from "./todo";
+import { TodoServiceService, TodoServiceImplementation } from "./todo";
 import { ServerManager } from "../../utils/internalServer";
 
 export function buildServer() {
   const server = new Server();
-  server.addService(TodoServiceService, TodoServiceImplemenation);
+  server.addService(TodoServiceService, TodoServiceImplementation);
   return server;
 }
 

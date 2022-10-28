@@ -4,7 +4,7 @@ const todoItemService = new TodoItemService();
 
 export const resolvers = {
   Query: {
-    TODO_getTodoItemById(_: any, { id }: { id: string }) {
+    TODO_getTodoItemById(_: unknown, { id }: { id: string }) {
       return todoItemService.findById(TodoItemService.fromGlobalId(id));
     },
     TODO_listTodoItems() {
@@ -22,7 +22,7 @@ export const resolvers = {
     }),
   },
   Mutation: {
-    TODO_createTodoItem(_: any, { input }: any) {
+    TODO_createTodoItem(_: unknown, { input }: any) {
       return todoItemService.create(input);
     },
   },
