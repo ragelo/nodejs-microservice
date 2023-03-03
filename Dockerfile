@@ -1,7 +1,7 @@
 ########################################
 ## BUILD ###############################
 ########################################
-FROM node:16 as build
+FROM node:19 as build
 WORKDIR /app
 ADD package.json package-lock.json ./
 
@@ -18,7 +18,7 @@ RUN npm run build
 ########################################
 ## SERVER ##############################
 ########################################
-FROM node:16-alpine as server
+FROM node:19-alpine as server
 WORKDIR /app
 ADD package.json package-lock.json ./
 
